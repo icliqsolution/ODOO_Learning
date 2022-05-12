@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <delete id="student_60" model="school_student.school_student" />
+    <delete id ="hobby_5" model="hobby" />
+
+</odoo>

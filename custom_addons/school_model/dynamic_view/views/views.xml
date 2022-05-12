@@ -1,0 +1,89 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="dynamic_view_list">
+      <field name="name">dynamic_view.list</field>
+      <field name="model">dynamic_view.dynamic_view</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="school_name"/>
+          <field name="school_phone"/>
+          <field name="school_email"/>
+          <field name="school_type" />
+          <field name="student_name" />
+          <field name="student_rno" />
+          <field name="student_fees" />
+          <field name="student_seq" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="school_dynamic_view_graph" model="ir.ui.view">
+      <field name="name">school.dynamic.view.graph</field>
+      <field name="model">dynamic_view.dynamic_view</field>
+      <field name="arch" type="xml">
+        <graph>
+          <field name="school_name"/>
+          <field name="student_fees" type="measure" />
+        </graph>
+      </field>
+    </record>
+
+    <record id="school_dynamic_view_pivot" model="ir.ui.view">
+      <field name="name">school.dynamic.view.pivot</field>
+      <field name="model">dynamic_view.dynamic_view</field>
+      <field name="arch" type="xml">
+        <pivot string="" disable_linking="true">
+          <field name="school_name" type="col" />
+          <field name="student_name" type="col" />
+          <field name="student_fees" type="measure" />
+        </pivot>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="dynamic_view_action_window">
+      <field name="name">dynamic_view window</field>
+      <field name="res_model">dynamic_view.dynamic_view</field>
+      <field name="view_mode">tree,graph,pivot</field>
+    </record>
+
+    <menuitem name="Dynamic School Student" id="dynamic_view_school" parent="school.school_sub_menu"
+              action="dynamic_view_action_window"/>
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="dynamic_view.action_server">
+      <field name="name">dynamic_view server</field>
+      <field name="model_id" ref="model_dynamic_view_dynamic_view"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="dynamic_view" id="dynamic_view.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="dynamic_view.menu_1" parent="dynamic_view.menu_root"/>
+    <menuitem name="Menu 2" id="dynamic_view.menu_2" parent="dynamic_view.menu_root"/>
+-->
+    <!-- actions -->
+
+    <!-- <menuitem name="List" id="dynamic_view.menu_1_list" parent="dynamic_view.menu_1"
+              action="dynamic_view.action_window"/> -->
+    <!-- <menuitem name="Dynamic School Student" id="dynamic_view" parent="dynamic_view.menu_2"
+              action="dynamic_view.action_server"/> -->
+
+  </data>
+</odoo>

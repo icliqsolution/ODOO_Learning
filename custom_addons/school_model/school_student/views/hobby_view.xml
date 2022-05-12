@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="student_hobby_form" model="ir.ui.view">
+      <field name="name">student.hobby</field>
+      <field name="model">hobby</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="name" />
+          </group>
+        </form>
+      </field>
+    </record>
+
+    <record id="student_hobby_list" model="ir.ui.view">
+      <field name="name">student.hobbylist</field>
+      <field name="model">hobby</field>
+      <field name="arch" type="xml">
+        <!-- 1, create, update record using list view Odoo -->
+        <!-- 2, default_order="id dese" using the id is revarce. -->
+        <tree editable="bottom" default_order="name, id desc">
+          <field name="id" />
+          <field name="name" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="student_hobby_action_window" model="ir.actions.act_window">
+      <field name="name">Student Hobby</field>
+      <field name="res_model">hobby</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_student_hobby" name="Student Hobby" parent="school_student.menu_1" action="school_student.student_hobby_action_window" />
+
+        
+
+    </data>
+</odoo>

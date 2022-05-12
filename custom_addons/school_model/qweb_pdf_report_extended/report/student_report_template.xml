@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <template id="school_student_profile_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="qweb_pdf_report_extended.school_student_profile_report"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="sub_student_template">
+        <t t-call="web.external_layout"/>
+        <div>
+            <a href="www.google.com">Google</a>
+            
+            <t t-call="qweb_pdf_report_extended.school_student_profile_report_temp"/>
+            <t t-call="qweb_pdf_report_extended.school_student_profile_report_temp"/>
+            <t t-call="qweb_pdf_report_extended.school_student_profile_report_temp"/>
+            <t t-call="qweb_pdf_report_extended.school_student_profile_report_temp"/>
+        </div>
+    </template> -->
+
+    <template id="school_student_profile_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <p t-attf-style="background-color:#{doc.roll_number};">
+                            Hello this is dynamic color changes..
+                        </p>
+                        <!-- its in sub template. -->
+                        <!-- <h1>Hello How are you ?</h1>
+                        <t t-set="a" t-value="1234567890"/>
+                        <h1 t-esc="doc.name" /> -->
+                        <!-- <p t-field="a" /> -->
+                        <!-- <h1 t-esc="doc.name" />
+                        <h2 t-esc="doc.name" />
+                        <h3 t-esc="doc.name" />
+                        <h4 t-esc="doc.name" />
+                        <h5 t-esc="doc.name" />
+                        <h6 t-esc="doc.name" />
+                        <p t-esc="doc.name" />
+                        <span t-esc="doc.name" />
+
+
+                        <h1 t-field="doc.name" />
+                        <h2 t-field="doc.name" />
+                        <h3 t-field="doc.name" />
+                        <h4 t-field="doc.name" />
+                        <h5 t-field="doc.name" />
+                        <h6 t-field="doc.name" />
+                        <p t-field="doc.name" />
+                        <span t-field="doc.name" /> -->
+
+                        <!-- Looping conditan -->
+                        <!-- <t t-foreach="1,2,3,4,5,6,7,8,9,10" t-as="rct">
+                            <h1 t-esc="rct" />                            
+                        </t> -->
+
+                        <!-- <t t-foreach="doc.school_id.school_list" t-as="rct">
+                            <h1 t-esc="rct.name" />  
+                            sequence of foreach loop :- <span t-esc="rct_index"/>
+                            Is this first index?<span t-esc="rct_first"/> 
+                            Is this last index? <span t-esc="rct_first"/>
+
+                            <p t-esc="rct_even"/>
+                            <p t-esc="rct_odd"/>
+                        </t> -->
+
+                        <!-- variable in qweb -->
+                        <!-- <t t-set="a" t-value="1234"/>
+                        <p t-esc="a" />
+
+                        <t t-set="a" t-value="AkashLearn"/>
+                        <p t-esc="a" />
+
+                        <t t-set="a" t-value="doc.name"/>
+                        <p t-esc="a" />
+                        <t t-set="abc" t-value="0"/>
+                        <t t-foreach="doc.school_id.school_list" t-as="rct">
+                            <t t-set="abc" t-value="abc + 1"/>
+                        </t>
+                        <p t-esc="abc" />-->
+                    </div>
+                </t>
+            </t> 
+        </t>
+    </template>
+
+
+    <record id="school_student_profile_report_temp" model="ir.actions.report">
+        <field name="name">Student Card</field>
+        <field name="model">school_student.school_student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">qweb_pdf_report_extended.school_student_profile_report</field>
+        <field name="report_file">qweb_pdf_report_extended.school_student_profile_report</field>
+        <field name="print_report_name">'Student-Card'</field> 
+        <field name="binding_model_id" ref="school_student.model_school_student_school_student" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

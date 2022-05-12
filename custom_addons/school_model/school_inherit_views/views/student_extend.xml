@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <record id="student_list_view_extend" model="ir.ui.view">
+        <field name="name">student.list.view.extend</field>
+        <field name="model">school_student.school_student</field>
+        <field name="inherit_id" ref="school_student.school_student_list" />
+                                          module_name.xml_view  
+        <field name="arch" type="xml">
+            <field name="id" position="after" >
+                <field name="write_date" />
+                <field name="write_uid" />
+            </field>
+
+        </field>
+    </record> -->
+
+    <!-- <record id="student_form_view_extend" model="ir.ui.view">
+        <field name="name">student.form.view.extend</field>
+        <field name="model">school_student.school_student</field>
+        <field name="inherit_id" ref="school_student.school_student_form" />
+        <field name="arch" type="xml">
+            <field name="school_id" position="before" >
+                <field name="write_date" />
+            </field>
+            <field name="school_id" position="after" >
+                <field name="write_date" />
+            </field>
+        </field>
+    </record>  -->
+
+<!-- Xpath View -->
+    <!-- <record id="student_form_inherit_view" model="ir.ui.view">
+        <field name="name">student.form.inherit.view</field>
+        <field name="model">school_student.school_student</field>
+        <field name="inherit_id" ref="school_student.school_student_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form//sheet" position="inside">
+                <group name="name" string="string">
+                    <field name="write_uid" />
+                    <field name="write_date" />
+                </group>                
+            </xpath>
+            <xpath expr="//field[@name='create_uid']" position="after">
+                <field name="write_uid" />
+                <field name="write_date" />
+            </xpath>
+        </field>
+    </record> -->
+
+    <!-- <record id="student_inherit_list_view" model="ir.ui.view">
+        <field name="name">student.inherit.list.view</field>
+        <field name="model">school_student.school_student</field>
+        <field name="inherit_id" ref="school_student.school_student_list" />
+        <field name="arch" type="xml"> -->
+            <!-- <field name="id" position="after" >
+                <field name="write_date" />
+                <field name="write_uid" />
+            </field> -->
+
+            <!-- <xpath expr="//field[@name='create_uid']" position="after">
+                <field name="write_uid" />
+                <button name="buttonClickEvent" type="object" string="Button" />
+            </xpath>
+        </field>
+    </record> -->
+
+    <!-- <record id="student_form_inherit" model="ir.ui.view">
+        <field name="name">student.form.inherit</field>
+        <field name="model">school_student.school_student</field>
+        <field name="inherit_id" ref="school_student.school_student_form" />
+        <field name="arch" type="xml"> -->
+            <!-- <field name="hobby_list" position="before" >
+                <field name="write_date" />
+            </field> -->
+            <!-- <xpath expr="//notebook" position="inside">
+                <page string="Extend Position Inside Option">
+                    <h1>Inside Option</h1>
+                </page>
+            </xpath>
+        </field>
+    </record> -->
+
+    <!-- <record id="student_view_form_extend" model="ir.ui.view">
+        <field name="name">student.view.form.extend</field>
+        <field name="model">school_student.school_student</field>
+        <field name="inherit_id" ref="school_student.school_student_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@id=page1]" position="replace"/>
+            <field name="id" position="replace" />
+            
+        </field>
+    </record> -->
+
+    <record id="student_view_extend" model="ir.ui.view">
+        <field name="name">student.view.extend</field>
+        <field name="model">school_student.school_student</field>
+        <field name="inherit_id" ref="school_student.school_student_form" />
+        <field name="arch" type="xml">
+            <field name="currency_id" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

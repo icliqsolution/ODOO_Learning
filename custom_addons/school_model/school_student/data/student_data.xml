@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="school_60" model="school.profile">
+        <field name="name">field_value</field>
+        <field name="email">email@gmail.com</field>
+    </record>
+    <record id="student_60" model="school_student.school_student">
+        <field name="name">ram</field>
+        <field name="school_id" ref="school_60" />
+    </record>
+    
+    <function model="school_student.school_student" name="_change_roll_number" />
+    
+
+</odoo>

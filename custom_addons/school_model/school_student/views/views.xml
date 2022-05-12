@@ -1,0 +1,388 @@
+<odoo>
+  <data>
+    <!-- Search bar -->
+    <record id="school_profile_view_search" model="ir.ui.view">
+      <field name="name">school_profile_view.search</field>
+      <field name="model">school_student.school_student</field>
+      <field name="arch" type="xml">
+        <search>
+          <!-- our custom serach we can define.
+          mean all three types of search filters. -->
+            <field name="name" string="Student Name" filter_domain="[('name','ilike',self)]" />
+            <field name="school_id" string="School Name" filter_domain="[('name','ilike',self)]" />
+
+            <!-- it do Filter function field.  -->
+            <filter name="roll_number" string="Roll Number" domain="[('roll_number', '!=', False)]" />
+            <!-- Today Record Filter. -->
+            <filter name="create_date" string="Today Record" domain="[('create_date', '>=', context_today().strftime('%Y-%m-%d'))]" />
+              <!-- Seven day Record Filter -->
+            <filter name="seven_day_filter" string="This Week Record" domain="[('create_date', '>=', (context_today() + datetime.timedelta(-6)).strftime('%Y-%m-%d'))]" />
+
+            <!-- That do group by source code in function.  -->
+            <group string="Group By">
+              <filter name="school_id" string="school " context="{'group_by': 'school_id'}" />
+              <filter name="total_fees" string="Total Fees" groups="school.access_student_admin_level_group" context="{'group_by': 'total_fees'}" />
+            </group>
+
+            <searchpanel>
+              <!-- We need to define only
+              selection and relation field only. -->
+              <field name="school_id" 
+                      icon="fa fa-filter" 
+                      select="multi" 
+                      enable_counters="1" />
+                      <!-- cheang icon than using -->
+                      <!-- selcted multi data -->
+                      <!-- enable_counters using count of record -->
+            </searchpanel>
+
+        </search>
+      </field>
+    </record>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="school_student_list">
+      <field name="name">school_student list</field>
+      <field name="model">school_student.school_student</field>
+      <field name="arch" type="xml">
+        <!-- create, update record using list view Odoo -->
+        <!-- <tree editable="bottom"> -->
+        <!-- create, write, duplicate, import, export_xlsx hide -->
+        <!-- <tree create="0" export_xlsx="0" delete="0"> -->
+        <tree>
+          <field name="student_seq" widget="handle" />
+          <field name="id" decoration-info="1" />
+          <field name="create_uid" />
+          <field name="roll_number" decoration-bf="1" decoration-primary="1" />
+          <field name="name" decoration-muted="1" />
+          <field name="create_date" decoration-warning="1" optional='hide' />
+          <field name="school_id" decoration-bf="1" decoration-success="1" widget="badge" />
+          <field name="total_fees" sum="Average for This field"/> <!-- Sum of the Total Fees -->
+          <field name="active" />
+          <field name="currency_id" decoration-it="1" decoration-danger="1" />
+          <button name="buttonClickEvent" string="Click Me!1" type="object" class="fa fa-hand-o-right" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="school_student_form">
+      <field name="name">school.student.form</field>
+      <field name="model">school_student.school_student</field>
+      <field name="arch" type="xml">
+        <!-- <form duplicate="0"> -->
+        <form>
+          <header>
+            <button class="btn-primary" name="custom_button" string="Custom Button Click Me!" type="object" />
+            <!-- Wizard Button  -->
+            <button class="oe_highlight" name="wiz_open" string="Wizard open using custom method" type="object" />
+            <!-- danger Button Color -->
+            <!-- <button class="btn-outline-danger btn-lg" name="custom_button" string="Custom Button Click Danger Me!" type="object" /> -->
+            <!-- success Button Color -->
+            <!-- <button class="btn-outline-success" name="custom_button" string="Custom Button Click success Me!" type="object" /> -->
+            <!-- warning Button Color -->
+            <!-- <button class="btn-outline-warning" name="custom_button" string="Custom Button Click warning Me!" type="object" /> -->
+            <!-- info Button Color -->
+            <!-- <button class="btn-outline-info btn-xs" name="custom_button" string="Custom Button Click info Me!" type="object" /> -->
+            <!-- light Button Color -->
+            <!-- <button class="btn-outline-light" name="custom_button" string="Custom Button Click light Me!" type="object" /> -->
+            <!-- dark Button Color -->
+            <!-- <button class="btn-outline-dark btn-sm" name="custom_button" string="Custom Button Click dark Me!" type="object" /> -->
+            <field name="state" widget="statusbar" options="{'clickable':1}" />
+            <!-- statusbar_visible="draf,paid,done" -->
+          </header>
+          <sheet>
+            <group>
+              <group>
+                <field name="id" groups="school.access_student_admin_level_group" />
+                <field name="create_uid" groups="school.access_student_admin_level_group"/>
+                <field name="name"/>
+                <field name="student_seq" />
+                <field name="roll_number" />
+                
+              </group>
+                  <!-- inherit Fields -->
+                  <group>
+                    <field name="student_img" class="oe_avatar" widget="image" />
+                    <field name="parent_name" />
+                    <field name="school_id" string="School" />
+                    <field name="bday" /> 
+                    <field name="ref_id" />
+                    <field name="active" />
+                  </group>
+                <group>
+                  
+                  <field name="street" />
+                  <field name="street_one" />
+                  <field name="city" />
+                  <field name="state" />
+                  <field name="country" />
+                  <field name="zip_code" />
+                </group>
+            </group>
+            <notebook>
+              <page string="Fees">
+                <group name="name" string="School Fees">
+                  <field name="currency_id" />
+                  <field name="student_fees" nolable="1" />
+                  <field name="total_fees" widget="monetary" attrs = "{'invisible':[('student_fees','=',0.00)]}" />
+                </group>
+              </page>
+              <page string="Hobby">
+                <group string="Student Hobby">
+                  <field name="hobby_list" widget="many2many_tags" /> 
+                </group>
+              </page>
+              <page id="page1" string="Blank Page">
+
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="school_extend_form">
+      <field name="name">school_extend form</field>
+      <field name="model">school.profile</field>
+      <field name="inherit_id" ref="school.school_form_view"/>
+      <field name="arch" type="xml">
+        <field name="school_discription" position="after">
+          <field name="school_list" string="Students" />
+
+        </field>
+      </field>
+    </record>
+    
+    <!-- Kanban View -->
+    <record id="student_kanban_view_kanban" model="ir.ui.view">
+      <field name="name">student_kanban.view.kanban</field>
+      <field name="model">school_student.school_student</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <!-- records_draggable="0" to stop drag and drop feature in kanban view. -->
+          <field name="name" />
+          <field name="roll_number" />
+          <field name="school_id" />
+          <field name="id" />
+          <field name="student_img" />
+          <field name="state" />
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                <div class="o_kanban_image d-none d-md-block"
+                  t-attf-style="background-image:url('#{kanban_image('school_student.school_student','student_img',record.id.raw_value, placeholder)}')">
+                </div>
+                <!-- <div class="o_kanban_image d-none d-md-block" 
+                t-att-style="background-image:url('#{kanban_image('school_student.school_student','student_img',record.id.raw_value,placeholder)}')"> -->
+                  <!-- <img class="o_kanban_image_inner_pic" t-att-src = "kanban_image('school_student.school_student','student_img',record.id.raw_value)" /> -->
+                <!-- </div> -->
+                <div class="oe_kanban_details d-flex flex-column">
+                  <strong>
+                    <field name="name" />
+                  </strong>
+                  <ul>
+                      <!-- Formate 1 -->
+                      <!-- <span t-esc="record.name.raw_value"/> -->
+                      <!-- Or Formate 2 -->
+                      <li>Roll Number:- <field name="roll_number" /></li>
+                      <li>School:- <field name="school_id" /></li>
+                  </ul>
+                </div>
+            </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+    <!-- <record model="ir.ui.view" id="school_extend_form">
+      <field name="name">school_extend form</field>
+      <field name="model">school.profile</field>
+      <field name="inherit_id" ref="school.school_form_view" />
+      <field name="arch" type="xml">
+        <field name="school_discription" position="after">
+          <field name="school_list" />
+        </field>
+      </field>
+    </record>   -->
+
+    <!-- Cohort view -->
+    <!-- <record id="model_school_view_cohort" model="ir.ui.view">
+      <field name="name">model_school.view.cohort</field>
+      <field name="model">school_student.school_student</field>
+      <field name="arch" type="xml">
+        <cohort string="student" date_start="date_start_field" date_stop="date_stop_field">
+        </cohort>
+      </field>
+    </record> -->
+
+    <!-- pivot view -->
+    <record id="school_name_view_pivot" model="ir.ui.view">
+      <field name="name">school_name.view.pivot</field>
+      <field name="model">school_student.school_student</field>
+      <field name="arch" type="xml">
+        <pivot string="" disable_linking="true">
+          <field name="student_fees" type="measure" />
+          <field name="school_id" type="col" />
+        </pivot>
+      </field>
+    </record>
+
+    <!-- Calender view -->
+    <record id="student_view_calendar" model="ir.ui.view">
+      <field name="name">student.view.calendar</field>
+      <field name="model">school_student.school_student</field>
+      <field name="arch" type="xml">
+        <calendar date_start="create_date">
+          <field name="name" />
+          
+        </calendar>
+      </field>
+    </record>
+    
+    <!-- Graph View -->
+    <!-- <record id="school_student_graph_view" model="ir.ui.view">
+      <field name="name">school.student.graph.view</field>
+      <field name="model">school_student.school_student</field>
+      <field name="arch" type="xml">
+        <graph disable_linking="1">
+          <field name="school_id" />
+        </graph>
+      </field>
+    </record> -->
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="school_student.action_window">
+      <field name="name">school_student </field>
+      <field name="res_model">school_student.school_student</field>
+      <!-- <field name="groups_id" eval="[(4,0,(ref('school.access_student_admin_level_group')))]" /> -->
+      <!-- this using dhreck and drop filter in group_by in Kanban. -->
+      <!-- <field name="context">{'group_by':'state'}</field> -->
+      <field name="view_mode">tree,pivot,calendar,kanban,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="school_student.action_server">
+      <field name="name">school_student server</field>
+      <field name="model_id" ref="model_school_student_school_student"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+    
+    <!-- odoo URL Actin-Redirect URL action define in xml -->
+    <record id="urlaction_for_google" model="ir.actions.act_url">
+      <field name="name">Google Redirect Page</field>
+      <field name="url">https://www.youtube.com/</field>
+      <field name="target">self</field>
+    </record>
+
+    <!-- Top menu item -->
+
+    <menuitem name="school_student" id="school_student.menu_root" web_icon="school_student,static/description/icon.png" />
+
+    <!-- menu categories -->
+
+    <menuitem name="Menu 1" id="school_student.menu_1" parent="school_student.menu_root"/>
+    <menuitem name="Menu 2" id="school_student.menu_2" parent="school_student.menu_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="URL Action" id="url_action_custom" parent="school_student.menu_1"
+              action="urlaction_for_google"/>
+
+    <menuitem name="List" id="school_student.menu_1_list" parent="school_student.menu_1"
+              action="school_student.action_window"/>
+    
+
+    <record id="car_engine_form" model="ir.ui.view">
+      <field name="name">car.engine</field>
+      <field name="model">car.engine</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="name" />
+            <field name="car_id" />
+          </group>
+        </form>
+      </field>
+    </record>
+
+    <record id="car_engine_list" model="ir.ui.view">
+      <field name="name">car.enginelist</field>
+      <field name="model">car.engine</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" />
+          <field name="car_id" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="car_engine_graph_view" model="ir.ui.view">
+      <field name="name">car.engine.graph.view</field>
+      <field name="model">car.engine</field>
+      <field name="arch" type="xml">
+        <graph disable_linking="1">
+          <field name="name" />
+          <field name="car_id" />
+        </graph>
+      </field>
+    </record>
+
+
+
+    <record id="car_engine_action_window" model="ir.actions.act_window">
+      <field name="name">Car Engine</field>
+      <field name="res_model">car.engine</field>
+      <field name="view_mode">graph,tree,form</field>
+    </record>
+
+    <menuitem id="menu_car_engine" name="Car Engine" parent="school_student.menu_2" action="school_student.car_engine_action_window" />
+    <!-- <menuitem id="menu_student_hobby" name="student hobby" parent="school_student.menu_2" action="school_student.student_hobby_form" /> -->
+
+
+
+    <!-- <record id="student_hobby_form" model="ir.ui.view">
+      <field name="name">student.hobby</field>
+      <field name="model">hobby</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="name" />
+          </group>
+        </form>
+      </field>
+    </record>
+
+    <record id="student_hobby_list" model="ir.ui.view">
+      <field name="name">student.hobbylist</field>
+      <field name="model">hobby</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="id" />
+          <field name="name" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="student_hobby_action_window" model="ir.actions.act_window">
+      <field name="name">Student Hobby</field>
+      <field name="res_model">hobby</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_student_hobby" name="Student Hobby" parent="school_student.menu_1" action="school_student.student_hobby_action_window" /> -->
+    
+
+    
+
+  </data>
+</odoo>

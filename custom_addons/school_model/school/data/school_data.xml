@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="school_51" model="school.profile">
+        <field name="name">ronak</field>
+        <field name="email">ronak@gmail.com</field>
+        <field name="phone">+91 9865321047</field>
+        <field name="address">address</field>
+        <field name="school_type">public</field>
+    </record>
+
+    <record id="school_52" model="school.profile">
+        <field name="name">ronak2</field>
+        <field name="email">ronak2@gmail.com</field>
+        <field name="phone">+91 7865321047</field>
+        <field name="address">address</field>
+        <field name="school_type">public</field>
+    </record>
+
+    <record id="school_53" model="school.profile">
+        <field name="name">ronak3</field>
+        <field name="email">ronak@gmail.com</field>
+        <field name="phone">+91 0865321047</field>
+        <field name="address">address3</field>
+        <field name="school_type">public</field>
+    </record>
+
+    <record id="school_54" model="school.profile">
+        <field name="name">ronak4</field>
+        <field name="email">ronak6@gmail.com</field>
+        <field name="phone">+91 1234321047</field>
+        <field name="address">address 4</field>
+        <field name="school_type">public</field>
+    </record>
+
+    <!-- How to generate sequence in Odoo - Auto sequence generate using ir.sequence -->
+
+    <record id="school_code_sequence_name" model="ir.sequence">
+        <field name="name">School Code</field>
+        <field name="code">school.profile</field>
+        <field name="prefix">School</field>
+        <field name="number_increment" eval="1" />
+    </record>
+
+</odoo>
